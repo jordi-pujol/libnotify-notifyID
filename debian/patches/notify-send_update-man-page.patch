@@ -1,0 +1,37 @@
+From: Jordi Pujol Palomer <jordipujolp@gmail.com>
+Subject: notify-send: Manage notification ID.
+Date: Thu, 21 Apr 2016 11:04:56 +0200
+
+* Update man page of notify-send according to that modifications.
+* Write notification ID to standard output.
+* Option -r,--reuse-id to reuse a message window by ID.
+
+diff -Naurp libnotify_0.7.6-2/debian/notify-send.1 libnotify-0.7.6-2.lnet/debian/notify-send.1
+--- libnotify_0.7.6-2/debian/notify-send.1
++++ libnotify-0.7.6-2.lnet/debian/notify-send.1	2016-04-21 10:04:44.606799255 +0200
+@@ -8,7 +8,8 @@ notify-send - a program to send desktop
+ With \fInotify-send\fR you can sends desktop notifications to the user via
+ a notification daemon from the command line.  These notifications can be
+ used to inform the user about an event or display some form of information
+-without getting in the user's way.
++without getting in the user's way. On success writes the notification ID to
++standard output.
+ .SH OPTIONS
+ \fB\-u, \-\-urgency=LEVEL\fR
+ Specifies the urgency level (low, normal, critical).
+@@ -19,9 +20,15 @@ Specifies the timeout in milliseconds at
+ \fB\-i, \-\-icon=ICON[,ICON...]\fR
+ Specifies an icon filename or stock icon to display.
+ .TP
++\fB\-a, \-\-app-name=APP_NAME\fR
++Specifies the app name for the icon.
++.TP
+ \fB\-c, \-\-category=TYPE[,TYPE...]\fR
+ Specifies the notification category.
+ .TP
++\fB\-r, \-\-reuse-id=ID\fR
++Specifies the notification identifier to reuse.
++.TP
+ .SS "Help options:"
+ .TP
+ \-?, \fB\-\-help\fR

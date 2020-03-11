@@ -1,0 +1,2 @@
+Tests: build
+Depends: build-essential, dbus (>= 1.8), notification-daemon, xauth, xvfb, libnotify-dev, pkg-config

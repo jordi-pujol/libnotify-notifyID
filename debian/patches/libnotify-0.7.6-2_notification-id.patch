@@ -1,0 +1,86 @@
+From: Jordi Pujol Palomer <jordipujolp@gmail.com>
+Subject: notify-send: Manage notification ID.
+Date: Thu, 21 Apr 2016 11:04:56 +0200
+
+  * Write notification ID to standard output.
+  * Option -r,--reuse-id to reuse a message window by ID.
+
+diff -Naurp libnotify_0.7.6-2/libnotify/notification.c libnotify-0.7.6-2.lnet/libnotify/notification.c
+--- libnotify_0.7.6-2/libnotify/notification.c
++++ libnotify-0.7.6-2.lnet/libnotify/notification.c	2016-04-20 19:15:26.586315065 +0200
+@@ -1131,3 +1131,22 @@ notify_notification_get_closed_reason (c
+ 
+         return notification->priv->closed_reason;
+ }
++
++void
++notify_notification_set_id (NotifyNotification *notification,
++                                 gint                id)
++{
++        g_return_if_fail (notification != NULL);
++        g_return_if_fail (NOTIFY_IS_NOTIFICATION (notification));
++
++        notification->priv->id = id;
++}
++
++guint32
++notify_notification_get_id (const NotifyNotification *notification)
++{
++        g_return_val_if_fail (notification != NULL, -1);
++        g_return_val_if_fail (NOTIFY_IS_NOTIFICATION (notification), -1);
++
++        return notification->priv->id;
++}
+diff -Naurp libnotify_0.7.6-2/libnotify/notification.h libnotify-0.7.6-2.lnet/libnotify/notification.h
+--- libnotify_0.7.6-2/libnotify/notification.h
++++ libnotify-0.7.6-2.lnet/libnotify/notification.h	2016-04-20 19:15:36.682305066 +0200
+@@ -186,5 +186,10 @@ gboolean            notify_notification_
+ 
+ gint                notify_notification_get_closed_reason     (const NotifyNotification *notification);
+ 
++guint32             notify_notification_get_id                (const NotifyNotification *notification);
++
++void                notify_notification_set_id                (NotifyNotification *notification,
++                                                               gint                id);
++
+ G_END_DECLS
+ #endif /* NOTIFY_NOTIFICATION_H */
+diff -Naurp libnotify_0.7.6-2/tools/notify-send.c libnotify-0.7.6-2.lnet/tools/notify-send.c
+--- libnotify_0.7.6-2/tools/notify-send.c
++++ libnotify-0.7.6-2.lnet/tools/notify-send.c	2016-04-21 09:41:18.778546344 +0200
+@@ -133,6 +133,7 @@ main (int argc, char *argv[])
+         static gboolean     do_version = FALSE;
+         static gboolean     hint_error = FALSE;
+         static glong        expire_timeout = NOTIFY_EXPIRES_DEFAULT;
++        static glong        id = 0;
+         GOptionContext     *opt_ctx;
+         NotifyNotification *notify;
+         GError             *error = NULL;
+@@ -159,6 +160,9 @@ main (int argc, char *argv[])
+                  N_
+                  ("Specifies basic extra data to pass. Valid types are int, double, string and byte."),
+                  N_("TYPE:NAME:VALUE")},
++                {"reuse-id", 'r', 0, G_OPTION_ARG_INT, &id,
++                 N_("Specifies the notification identifier to reuse"),
++                 N_("ID")},
+                 {"version", 'v', 0, G_OPTION_ARG_NONE, &do_version,
+                  N_("Version of the package."),
+                  NULL},
+@@ -230,6 +234,7 @@ main (int argc, char *argv[])
+         notify_notification_set_urgency (notify, urgency);
+         notify_notification_set_timeout (notify, expire_timeout);
+         notify_notification_set_app_name (notify, app_name);
++        notify_notification_set_id (notify, id);
+ 
+         g_free (body);
+ 
+@@ -270,7 +275,8 @@ main (int argc, char *argv[])
+         }
+ 
+         if (!hint_error)
+-                notify_notification_show (notify, NULL);
++                if (!(hint_error = ! notify_notification_show (notify, NULL)))
++                        fprintf (stdout, "%u\n", notify_notification_get_id (notify));
+ 
+         g_object_unref (G_OBJECT (notify));
+ 
