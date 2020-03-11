@@ -3,7 +3,7 @@ Subject: notify-send: Manage notification ID.
 Date: Thu, 21 Apr 2016 11:04:56 +0200
 
   * Write notification ID to standard output.
-  * Option -r,--reuse-id to reuse a message window by ID.
+  * Option -r,--replaces-id to reuse a message window by ID.
 
 diff -Naurp libnotify_0.7.6-2/libnotify/notification.c libnotify-0.7.6-2.lnet/libnotify/notification.c
 --- libnotify_0.7.6-2/libnotify/notification.c
@@ -60,8 +60,8 @@ diff -Naurp libnotify_0.7.6-2/tools/notify-send.c libnotify-0.7.6-2.lnet/tools/n
                   N_
                   ("Specifies basic extra data to pass. Valid types are int, double, string and byte."),
                   N_("TYPE:NAME:VALUE")},
-+                {"reuse-id", 'r', 0, G_OPTION_ARG_INT, &id,
-+                 N_("Specifies the notification identifier to reuse"),
++                {"replaces-id", 'r', 0, G_OPTION_ARG_INT, &id,
++                 N_("Specifies the id of the notification that should be replaced."),
 +                 N_("ID")},
                  {"version", 'v', 0, G_OPTION_ARG_NONE, &do_version,
                   N_("Version of the package."),

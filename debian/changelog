@@ -1,3 +1,28 @@
+libnotify (0.7.9-1.lnet.1) unstable; urgency=medium
+
+  * Apply my mod to this Debian release.
+  * Write notification ID to standard output.
+  * Option -r,--reuse-id to reuse a message window by ID.
+  * Update man page.
+
+ -- Jordi Pujol Palomer <jordipujolp@gmail.com>  Wed, 14 Aug 2019 12:37:56 +0200
+
+libnotify (0.7.9-1) unstable; urgency=medium
+
+  * New upstream release
+  * debian/patches: Drop empty series file
+  * debian/gbp.conf: Add default settings for gnome team
+  * debian/control:
+    - Build-depend on docbook-xsl-ns to generate manpage
+    - Build-depend on xmlto to generate spec files
+    - Mention that libnotify4-doc includes specs
+  * debian/notify-send.1: Drop as now upstream includes one
+  * debian/libnotify-bin.manpages: install the manpage built from source
+  * debian/libnotify-doc.install: Install notification specs in docs
+  * debian/rules: Remove autoreconf option, as we compile now with meson
+
+ -- Marco Trevisan (Treviño) <marco@ubuntu.com>  Wed, 26 Feb 2020 20:32:28 +0100
+
 libnotify (0.7.8-1.lnet.1) unstable; urgency=medium
 
   * Apply my mod to this Debian release.

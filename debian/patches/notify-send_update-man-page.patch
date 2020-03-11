@@ -4,34 +4,45 @@ Date: Thu, 21 Apr 2016 11:04:56 +0200
 
 * Update man page of notify-send according to that modifications.
 * Write notification ID to standard output.
-* Option -r,--reuse-id to reuse a message window by ID.
+* Option -r,--replaces-id to reuse a message window by ID.
 
-diff -Naurp libnotify_0.7.6-2/debian/notify-send.1 libnotify-0.7.6-2.lnet/debian/notify-send.1
---- libnotify_0.7.6-2/debian/notify-send.1
-+++ libnotify-0.7.6-2.lnet/debian/notify-send.1	2016-04-21 10:04:44.606799255 +0200
-@@ -8,7 +8,8 @@ notify-send - a program to send desktop
- With \fInotify-send\fR you can sends desktop notifications to the user via
- a notification daemon from the command line.  These notifications can be
- used to inform the user about an event or display some form of information
--without getting in the user's way.
-+without getting in the user's way. On success writes the notification ID to
-+standard output.
- .SH OPTIONS
- \fB\-u, \-\-urgency=LEVEL\fR
- Specifies the urgency level (low, normal, critical).
-@@ -19,9 +20,15 @@ Specifies the timeout in milliseconds at
- \fB\-i, \-\-icon=ICON[,ICON...]\fR
- Specifies an icon filename or stock icon to display.
- .TP
-+\fB\-a, \-\-app-name=APP_NAME\fR
-+Specifies the app name for the icon.
-+.TP
- \fB\-c, \-\-category=TYPE[,TYPE...]\fR
- Specifies the notification category.
- .TP
-+\fB\-r, \-\-reuse-id=ID\fR
-+Specifies the notification identifier to reuse.
-+.TP
- .SS "Help options:"
- .TP
- \-?, \fB\-\-help\fR
+diff -Naurp libnotify_0.7.9-1/docs/notify-send.xml libnotify-0.7.9-1.lnet/docs/notify-send.xml
+--- libnotify_0.7.9-1/docs/notify-send.xml
++++ libnotify-0.7.9-1.lnet/docs/notify-send.xml	2016-04-21 10:04:44.606799255 +0200
+@@ -46,7 +46,7 @@
+   <refsection>
+     <info><title>Description</title></info>
+ 
+-    <para>With <command>notify-send</command> you can send desktop notifications to the user via a notification daemon from the command line. These notifications can be used to inform the user about an event or display some form of information without getting in the user’s way.</para>
++    <para>With <command>notify-send</command> you can send desktop notifications to the user via a notification daemon from the command line. These notifications can be used to inform the user about an event or display some form of information without getting in the user’s way. On success writes the notification ID to standard output.</para>
+   </refsection>
+   <refsection>
+     <info><title>Options</title></info>
+@@ -80,6 +80,13 @@
+         </listitem>
+       </varlistentry>
+       <varlistentry>
++        <term><option>-a</option>, <option>--app-name</option>=<replaceable>APP_NAME</replaceable>
++        </term>
++        <listitem>
++          <para>Specifies the app name for the icon.</para>
++        </listitem>
++      </varlistentry>
++      <varlistentry>
+         <term><option>-c</option>, <option>--category</option>=<replaceable>TYPE</replaceable>[,<replaceable>TYPE</replaceable>…]
+         </term>
+         <listitem>
+@@ -87,6 +94,13 @@
+         </listitem>
+       </varlistentry>
+       <varlistentry>
++        <term><option>-r</option>, <option>--replaces-id</option>=<replaceable>ID</replaceable>
++        </term>
++        <listitem>
++          <para>Specifies the id of the notification that should be replaced.</para>
++        </listitem>
++      </varlistentry>
++      <varlistentry>
+         <term><option>-h</option>, <option>--hint</option>=<replaceable>TYPE</replaceable>:<replaceable>NAME</replaceable>:<replaceable>VALUE</replaceable> </term>
+         <listitem>
+           <para>Specifies basic extra data to pass. Valid types are <literal>INT</literal>, <literal>DOUBLE</literal>, <literal>STRING</literal> and <literal>BYTE</literal>.</para>
