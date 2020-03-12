@@ -1,5 +1,5 @@
 # libnotify-debian
-libnotify - allowing to use notification ID
+libnotify - allow to use notification ID
 
 notify-send and other utilities will receive the ID number of their notifications and are allowed to replace the notifications for new ones.
 
