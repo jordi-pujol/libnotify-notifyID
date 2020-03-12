@@ -17,7 +17,8 @@ _notify() {
 	export DISPLAY
 	export "${DBUS_SESSION_BUS_ADDRESS}"
 
-	while notifyID="$(_notify_send)" && [ $((c--)) -gt 0 ]; do
+	while notifyID="$(_notify_send)" && c=$((c-1)) && \
+	[ ${c} -gt 0 ]; do
 		sleep 1
 	done
 
